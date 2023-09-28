@@ -45,9 +45,11 @@ def parse_post(filepath):
 
 def import_from_word(filepath, title, category, author='Meet Shah'):
     with open(filepath, 'rb') as docx_file:
-        content_in_markdown = mammoth.convert_to_markdown(
-            docx_file, convert_image=mammoth.images.img_element(ImageWriter(title, './assets/images/'))).value
-    converted_contents = pandoc.write(pandoc.read(content_in_markdown), format='markdown')
+        content_in_markdown = mammoth.convert_to_markdown(docx_file).value
+        converted_contents = pandoc.write(pandoc.read(content_in_markdown), format='markdown')
+    #     content_in_markdown = mammoth.convert_to_markdown(
+    #         docx_file, convert_image=mammoth.images.img_element(ImageWriter(title, './assets/images/'))).value
+    # converted_contents = pandoc.write(pandoc.read(content_in_markdown), format='markdown')
 
     imported_post = Post(author, title, converted_contents, category)
     imported_post.save()
